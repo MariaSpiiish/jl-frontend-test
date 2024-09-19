@@ -52,6 +52,11 @@ export const generateStamps = (): Stamp[] => {
 };
 
 export const getScore = (gameStamps: Stamp[], offset: number): Score => {
+    const lastStamp = gameStamps[gameStamps.length - 1];
+    if (offset >= lastStamp.offset) {
+        return lastStamp.score;
+    }
+
     const gameStamp =  gameStamps.reduce((prev, current) => 
         current.offset <= offset ? current : prev,
         gameStamps[0]
@@ -60,6 +65,3 @@ export const getScore = (gameStamps: Stamp[], offset: number): Score => {
 
     return gameStamp.score;
 };
-
-const gameStamps = generateStamps();
-console.log(getScore(gameStamps, 3))
